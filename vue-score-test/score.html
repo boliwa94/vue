@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>成绩单</title>
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <style>
+        .school {
+            font-family: verdana, arial, sans-serif;
+            font: size 20px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #666666;
+            border-collapse: collapse;
+            margin: auto;
+        }
+
+        .school th {
+            border-width: 2px;
+            padding: 8px;
+            border-style: inset;
+            border-color: #666666;
+            background-color: #dedede;
+        }
+
+        .school td {
+            border-width: 2px;
+            padding: 8px;
+            border-style: inset;
+            border-color: #666666;
+            background-color: #ffffff;
+        }
+
+        input[id=in] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: none;
+            background-color: #200f4e;
+            color: white;
+        }
+
+        input[id=out] {
+            outline-style: none;
+            border: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="score" style="text-align:center">
+        <table class="school">
+            <tr>
+                <th>学科</th>
+                <th>成绩</th>
+            </tr>
+            <tr>
+                <td>数学</td>
+                <td>
+                    <input type="text" name="" id="in" value="" v-model.number="math" />
+                </td>
+            </tr>
+            <tr>
+                <td>英语</td>
+                <td>
+                    <input type="text" name="" id="in" value="" v-model.number="english" />
+                </td>
+            </tr>
+            <tr>
+                <td>化学</td>
+                <td>
+                    <input type="text" name="" id="in" value="" v-model.number="chemistry" />
+                </td>
+            </tr>
+            <tr>
+                <td>总分</td>
+                <td>
+                    <input type="text" name="" id="out" value="" v-model.number="sum" />
+                </td>
+            </tr>
+            <tr>
+                <td>均分</td>
+                <td>
+                    <input type="text" name="" id="out" value="" v-model.number="average" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#score",
+            data: {
+                math: 100,
+                english: 100,
+                chemistry: 100
+            },
+            computed: {
+                sum: function () {
+                    return Math.round(this.math + this.english + this.chemistry);
+                },
+                average: function () {
+                    return Math.round(this.sum / 3);
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

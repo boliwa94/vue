@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <ul v-for="user in users">
+            <li>{{ user.name }}</li>
+            <li>{{ user.email }}</li>
+        </ul>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                users: []
+            },
+            mounted: function () {
+                // axios.get('https://jsonplaceholder.typicode.com/users')
+                //     .then(response => this.users = response.data)
+                //     .catch(error => console.log(error))
+
+                //URLに直接記述
+                // axios.get('https://jsonplaceholder.typicode.com/users?name=Leanne Graham')
+                //     .then(response => this.users = response.data)
+                //     .catch(error => console.log(error))
+                
+                //パラメータオプションを使う params
+                axios.get('https://jsonplaceholder.typicode.com/users',
+                    {
+                        params: {
+                            name: 'Leanne Graham'
+                        }
+                    })
+                    .then(response => this.users = response.data)
+                    .catch(error => console.log(error))
+
+            }
+        })
+    </script>
+</body>
+
+
+</html>

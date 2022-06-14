@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <label for="id">id</label>
+            <input type="text" id="id" placeholder="请输入id" v-model="id">
+            
+            <label for="pp_name">名字</label>
+            <input type="text" id="pp_name" placeholder="请输入id" v-model="name">
+            <input type="button" value="添加" @click="add">
+
+            <label for="search">搜索</label>
+            <input type="text" id="search" placeholder="请输入id" v-model="keywords">
+        </div>
+
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        
+                        <th>名字</th></th>
+                        <th>添加时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in search(keywords)" :key="item.id">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.time }}</td>
+                        <td><a href="###" @click.prevent="del(item.id)">删除</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+    <script>
+        var app = new Vue({
+            el:'#app',
+            data:{
+               id:'',
+               name:'',
+               keywords:'',
+               list:[
+                   {id:1, name:'张三', time:new Date().toLocaleString()},
+                   {id:2, name:'李四', time:new Date().toLocaleString()}
+               ]
+            },
+            methods:{
+                add(){
+                    this.list.push({id:parseInt(this.id), name:this.name, time:new Date().toLocaleString()})
+                    this.id = this.name = ''
+                },
+                del(id){
+
+                    // 第一种方法通过some的方法查找删除
+                    // this.list.some((item,i) => {
+                    //     if (item.id == id) {
+                    //         this.list.splice(i,1)
+                    //         return true
+                    //     }
+                    // })
+
+                    // 第二种方法通过记录下标的方法进行查找删除-也可和第一种方法一样，在方法内删除
+                    var index = this.list.findIndex(item => {
+                        if(item.id == id) {
+                            return true
+                        }
+                    })
+                    this.list.splice(index,1)
+
+                },
+                search(keywords){
+                    var newList=[]
+
+                    // 第一种方法是遍历的形式进行查找，查询出符合条件的数组输出
+                    this.list.forEach(item => {
+                        if (item.name.indexOf(keywords) != -1) {
+                            console.log(item);
+                            newList.push(item)
+                        }
+                    })
+
+
+                    // 第二种使用filter方法进行查找
+                    // filter会创建一个新的数组，新数组检查会包含指定的条件
+                    // this.list.filter((item,i) => {
+                    //     if (item.name.includes(keywords)){
+                    //         // console.log(item);
+                    //         newList.push(item)
+                    //     }
+                    // })
+                    return newList
+
+                }
+            }
+        })
+    </script>
+    
+</body>
+</html>
