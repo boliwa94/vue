@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <input v-model="name"><br>
+        <button v-on:click="createNewUser">作成</button>
+        <ul>  
+          <li v-for="user in users">{{ user.name }}</li>
+        </ul>
+        </div>
+    <script>
+        new Vue({
+  el: '#app',
+  data: {
+    users: [],
+    name: ''
+  },
+  methods : {
+    createNewUser: function(){
+     axios.post('https://jsonplaceholder.typicode.com/users',{
+            name: this.name
+           })
+          .then(response => this.users.unshift(response.data))
+          .catch(error => console.log(error))     
+    }
+  },
+  mounted :function(){
+    axios.get('https://jsonplaceholder.typicode.com/users')
+          .then(response => this.users = response.data)
+          .catch(error => console.log(error))
+  }
+})
+    </script>
+</body>
+
+
+</html>
